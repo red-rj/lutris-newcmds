@@ -272,8 +272,8 @@ class CommandsMixin:
         target = Path(dir)
         assert target.is_dir(), "requires must be checked against a directory!"
         requires = Path(requires)
-        abspath = str((target / requires).resolve())
-        if target.name not in abspath:
+        abspath = (target / requires).resolve()
+        if not abspath.is_relative_to(target):
             raise RuntimeError("Illegal 'requires' reaches outside the target directory", requires)
         return abspath
 
