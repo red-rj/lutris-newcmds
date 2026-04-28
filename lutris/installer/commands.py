@@ -31,7 +31,7 @@ class CommandsMixin:
 
     # pylint: disable=no-member
     installer: LutrisInstaller = NotImplemented
-    user_inputs: list[dict]
+    user_inputs: list[dict[str, str]]
 
     def get_wine_path(self) -> str:
         """Return absolute path of wine version used during the installation, but
@@ -233,7 +233,7 @@ class CommandsMixin:
 
     def input_text(self, data):
         alias = f"INPUT_{data.get('id', 'TEXT')}"
-        message = data.get("message", _("Type bellow:"))
+        message = data.get("message", _("Type below:"))
         placeholder = data.get("placeholder", "...")
         self.interpreter_ui_delegate.begin_text_prompt(alias, message, placeholder, self._on_text)
         return "STOP"

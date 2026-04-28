@@ -997,7 +997,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
             browse_button.set_halign(Gtk.Align.CENTER)
             browse_button.set_valign(Gtk.Align.START)
             callback_data = {"callback": wrapped_callback, "requires": requires, "alias": alias}
-            browse_button.connect("clicked", self.on_browse_clicked2, callback_data)
+            browse_button.connect("clicked", self.on_browse_dir_clicked, callback_data)
             vbox.pack_start(browse_button, False, False, 40)
 
             self.stack.present_replacement_page("ask_for_dir", vbox)
@@ -1008,7 +1008,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
         previous_page = self.stack.save_current_page()
         self.stack.jump_to_page(present_ask_for_dir_page)
 
-    def on_browse_clicked2(self, btn, callback_data):
+    def on_browse_dir_clicked(self, btn, callback_data):
         dialog = DirectoryDialog(_("Select directory"), parent=self)
         folder = dialog.folder
         callback = callback_data["callback"]
