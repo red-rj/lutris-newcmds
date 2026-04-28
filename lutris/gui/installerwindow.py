@@ -976,7 +976,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
     # This page asks the user for a directory.
 
     def load_ask_for_dir_page(self, alias, message, requires, callback):
-        def present_ask_for_disc_page():
+        def present_ask_for_dir_page():
             """Ask the user to do insert a CD-ROM."""
 
             def wrapped_callback(*args, **kwargs):
@@ -993,7 +993,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
             vbox.pack_start(label, False, False, 0)
 
             browse_button = Gtk.Button(label=_("Browse…"))
-            browse_button.set_size_request(200,35)
+            browse_button.set_size_request(200, 35)
             browse_button.set_halign(Gtk.Align.CENTER)
             browse_button.set_valign(Gtk.Align.START)
             callback_data = {"callback": wrapped_callback, "requires": requires, "alias": alias}
@@ -1006,7 +1006,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
             self.display_cancel_button()
 
         previous_page = self.stack.save_current_page()
-        self.stack.jump_to_page(present_ask_for_disc_page)
+        self.stack.jump_to_page(present_ask_for_dir_page)
 
     def on_browse_clicked2(self, btn, callback_data):
         dialog = DirectoryDialog(_("Select directory"), parent=self)
