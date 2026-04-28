@@ -256,7 +256,7 @@ class CommandsMixin:
 
     def _on_dir_selected(self, _btn, requires, dir, alias):
         if requires:
-            required_abspath = os.path.join(dir, requires)
+            required_abspath = self._check_requires(dir, requires)
             if system.path_exists(required_abspath):
                 logger.debug("Found required file %s on %s", requires, dir)
             else:
@@ -264,6 +264,18 @@ class CommandsMixin:
 
         self.user_inputs.append({"alias": alias, "value": dir})
         self._iter_commands()
+
+    @staticmethod
+    def _check_requires(dir, requires):
+        """Check requires clause so it doesn't reach outside the target directory w/ relative paths,
+        returns the validaded path"""
+        target = Path(dir)
+        assert target.is_dir(), "requires must be checked against a directory!"
+        requires = Path(requires)
+        abspath = str((target / requires).resolve())
+        if target.name not in abspath:
+            raise RuntimeError("Illegal 'requires' reaches outside the target directory", requires)
+        return abspath
 
     def insert_disc(self, data):
         """Request user to insert an optical disc"""
